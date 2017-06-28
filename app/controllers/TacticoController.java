@@ -46,19 +46,28 @@ public class TacticoController extends Controller {
     }
 
     public Result procesar_rep1(){
-        //parametros de formulario
-        Map<String, String[]> values = request().body().asFormUrlEncoded();
-        
-        //obtenemos los parametros segun name de cada input
-        String carrera = values.get("carrera")[0];        
-        Integer anio = Integer.valueOf(values.get("anio")[0]);
-       /* Integer maxi = Integer.valueOf(values.get("max")[0]);*/
 
-        //hacemos la consulta
-        List<TRep1> registros = TRep1.find.where().eq("carrera",carrera).eq("ano",anio).findList();
+        try{
+            //parametros de formulario
+            Map<String, String[]> values = request().body().asFormUrlEncoded();
+            
+            //obtenemos los parametros segun name de cada input
+            String carrera = values.get("carrera")[0];        
+            Integer anio = Integer.valueOf(values.get("anio")[0]);
+            Integer max = Integer.valueOf(values.get("max")[0]);
+        /* Integer maxi = Integer.valueOf(values.get("max")[0]);*/
+
+            //hacemos la consulta
+            List<TRep1> registros = TRep1.find.where().eq("carrera",carrera).eq("ano",anio).orderBy("cum asc").setMaxRows(max).findList();
+            
+            //presentamos la salida
+            return ok(s_rep1.render(registros,carrera,anio,max));
+        }catch(Exception e){
+            e.printStackTrace();
+            return badRequest(error.render("Error en datos de entrada"));
+        }
+
         
-        //presentamos la salida
-        return ok(s_rep1.render(registros,carrera,anio));
     }
 
     public Result pdf_rep1(){
@@ -67,13 +76,14 @@ public class TacticoController extends Controller {
         //obtenemos los parametros segun name de cada input
         String carrera = values.get("carrera")[0];        
         Integer anio = Integer.valueOf(values.get("anio")[0]);
+        Integer max = Integer.valueOf(values.get("max")[0]);        
        /* Integer ciclo = Integer.valueOf(values.get("ciclo")[0]);*/
 
         //hacemos la consulta
-        List<TRep1> registros = TRep1.find.where().eq("carrera",carrera).eq("ano",anio).findList();
+        List<TRep1> registros = TRep1.find.where().eq("carrera",carrera).eq("ano",anio).orderBy("cum asc").setMaxRows(max).findList();
         
         //presentamos la salida
-        return pdfGenerator.ok(pdf_rep1.render(registros,carrera,anio),Configuration.root().getString("application.host"));
+        return pdfGenerator.ok(pdf_rep1.render(registros,carrera,anio,max),Configuration.root().getString("application.host"));
     }
 
     public Result e_rep2(){
@@ -81,19 +91,27 @@ public class TacticoController extends Controller {
     }
 
     public Result procesar_rep2(){
-        //parametros de formulario
-        Map<String, String[]> values = request().body().asFormUrlEncoded();
-        
-        //obtenemos los parametros segun name de cada input
-        String carrera = values.get("carrera")[0];        
-        Integer anio = Integer.valueOf(values.get("anio")[0]);
-        Integer ciclo = Integer.valueOf(values.get("ciclo")[0]);
 
-        //hacemos la consulta
-        List<TRep2> registros = TRep2.find.where().eq("carrera",carrera).eq("ano",anio).eq("ciclo",ciclo).findList();
+
+        try{
+            //parametros de formulario
+            Map<String, String[]> values = request().body().asFormUrlEncoded();
+            
+            //obtenemos los parametros segun name de cada input
+            String carrera = values.get("carrera")[0];        
+            Integer anio = Integer.valueOf(values.get("anio")[0]);
+            Integer ciclo = Integer.valueOf(values.get("ciclo")[0]);
+
+            //hacemos la consulta
+            List<TRep2> registros = TRep2.find.where().eq("carrera",carrera).eq("ano",anio).eq("ciclo",ciclo).findList();
+            
+            //presentamos la salida
+            return ok(s_rep2.render(registros,carrera,anio,ciclo));
+        }catch(Exception e){
+            return badRequest(error.render("Error en datos de entrada"));
+        }
+
         
-        //presentamos la salida
-        return ok(s_rep2.render(registros,carrera,anio,ciclo));
     }
 
     public Result pdf_rep2(){
@@ -117,17 +135,24 @@ public class TacticoController extends Controller {
     }
 
     public Result procesar_rep3(){
-        //parametros de formulario
-        Map<String, String[]> values = request().body().asFormUrlEncoded();
-        
-        //obtenemos los parametros segun name de cada input
-        String carrera = values.get("carrera")[0];        
 
-        //hacemos la consulta
-        List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).findList();
-        
-        //presentamos la salida
-        return ok(s_rep3.render(registros,carrera));
+
+        try{
+            //parametros de formulario
+            Map<String, String[]> values = request().body().asFormUrlEncoded();
+            
+            //obtenemos los parametros segun name de cada input
+            String carrera = values.get("carrera")[0];        
+
+            //hacemos la consulta
+            List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).findList();
+            
+            //presentamos la salida
+            return ok(s_rep3.render(registros,carrera));
+        }catch(Exception e){
+            return badRequest(error.render("Error en datos de entrada"));
+        }
+
     }
 
     public Result pdf_rep3(){
@@ -149,17 +174,24 @@ public class TacticoController extends Controller {
     }
 
     public Result procesar_rep4(){
-         Map<String, String[]> values = request().body().asFormUrlEncoded();
-        
-        //obtenemos los parametros segun name de cada input
-          
-        Integer anio = Integer.valueOf(values.get("anio")[0]);
 
-        //hacemos la consulta
-        List<TRep4> registros = TRep4.find.where().eq("ano",anio).findList();
-        
-        //presentamos la salida
-        return ok(s_rep4.render(registros,anio));
+        try{
+            Map<String, String[]> values = request().body().asFormUrlEncoded();
+            
+            //obtenemos los parametros segun name de cada input
+            
+            Integer anio = Integer.valueOf(values.get("anio")[0]);
+
+            //hacemos la consulta
+            List<TRep4> registros = TRep4.find.where().eq("ano",anio).findList();
+            
+            //presentamos la salida
+            return ok(s_rep4.render(registros,anio));
+        }catch(Exception e){
+            return badRequest(error.render("Error en datos de entrada"));
+        }
+
+         
     }
 
     public Result pdf_rep4(){
@@ -181,19 +213,27 @@ public class TacticoController extends Controller {
     }
 
     public Result procesar_rep5(){
-        //parametros de formulario
-        Map<String, String[]> values = request().body().asFormUrlEncoded();
-        
-        //obtenemos los parametros segun name de cada input
-        String carrera = values.get("carrera")[0];        
-        Integer anio = Integer.valueOf(values.get("anio")[0]);
-        Integer ciclo = Integer.valueOf(values.get("ciclo")[0]);
 
-        //hacemos la consulta
-        List<TRep5> registros = TRep5.find.where().eq("carrera",carrera).eq("ano",anio).eq("ciclo",ciclo).findList();
+
+        try{
+            //parametros de formulario
+            Map<String, String[]> values = request().body().asFormUrlEncoded();
+            
+            //obtenemos los parametros segun name de cada input
+            String carrera = values.get("carrera")[0];        
+            Integer anio = Integer.valueOf(values.get("anio")[0]);
+            Integer ciclo = Integer.valueOf(values.get("ciclo")[0]);
+
+            //hacemos la consulta
+            List<TRep5> registros = TRep5.find.where().eq("carrera",carrera).eq("ano",anio).eq("ciclo",ciclo).findList();
+            
+            //presentamos la salida
+            return ok(s_rep5.render(registros,carrera,anio,ciclo));
+        }catch(Exception e){
+            return badRequest(error.render("Error en datos de entrada"));
+        }
+
         
-        //presentamos la salida
-        return ok(s_rep5.render(registros,carrera,anio,ciclo));
     }
 
     public Result pdf_rep5(){

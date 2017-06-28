@@ -1,4 +1,4 @@
-@(registros: List[ERep3],carrera:String,desde:Date,hasta:Date,max:Integer)
+@(registros: List[ERep3],carrera:String,desde:Date,hasta:Date)
 @import helper._
 
 @css={
@@ -32,7 +32,6 @@
             <input type="text" name="carrera" value="@carrera" hidden="true"/>
             <input type="text" name="desde" value="@desde.format("dd/MM/yyyy")" hidden="true" />
             <input type="text" id="txtDateHasta" name="hasta" value="@hasta.format("dd/MM/yyyy")" hidden="true"/>
-            <input type="text" id="max" name="max" value="@max" hidden="true"/>
             <button type="submit" class="btn btn-success col-sm-2">Ver en PDF</button>
         </form>
          <button type="button" class="btn btn-warning col-sm-2" onclick="$('#reporte-table').tableExport({type:'excel',escape:'false'});">Exportar Excel</button>

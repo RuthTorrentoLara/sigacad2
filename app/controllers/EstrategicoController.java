@@ -150,15 +150,15 @@ public class EstrategicoController extends Controller {
         List<ERep3> registros =null;
         Date desde=null;
         Date hasta = null;
-        Integer max = Integer.valueOf(values.get("max")[0]);
+        //Integer max = Integer.valueOf(values.get("max")[0]);
         
         
             SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
             desde = sdf.parse(values.get("desde")[0]);
             hasta = sdf.parse(values.get("hasta")[0]);      
-            registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).orderBy("retirados asc").setMaxRows(max).findList();
+            registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).findList();
                         
-            return ok(s_rep3.render(registros,carrera,desde,hasta,max));
+            return ok(s_rep3.render(registros,carrera,desde,hasta));
             /* if(periodo == null){
                 flash("error","La fecha que ha ingresado no coincide con la fecha de inicio de ningun periodo de planilla, por favor intente nuevamente utilizando el selector de fechas");
                 return badRequest(errores.render());
@@ -180,14 +180,14 @@ public class EstrategicoController extends Controller {
         List<ERep3> registros =null;
         Date desde=null;
         Date hasta = null;
-        Integer max = Integer.valueOf(values.get("max")[0]);
+        //Integer max = Integer.valueOf(values.get("max")[0]);
         
             SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
             desde = sdf.parse(values.get("desde")[0]);
             hasta = sdf.parse(values.get("hasta")[0]);      
-            registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).orderBy("retirados asc").setMaxRows(max).findList();
+            registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).findList();
                         
-            return pdfGenerator.ok(pdf_rep3.render(registros,carrera,desde,hasta,max),Configuration.root().getString("application.host"));
+            return pdfGenerator.ok(pdf_rep3.render(registros,carrera,desde,hasta),Configuration.root().getString("application.host"));
             
             /* if(periodo == null){
                 flash("error","La fecha que ha ingresado no coincide con la fecha de inicio de ningun periodo de planilla, por favor intente nuevamente utilizando el selector de fechas");
