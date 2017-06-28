@@ -181,12 +181,13 @@ public class TacticoController extends Controller {
             //obtenemos los parametros segun name de cada input
             
             Integer anio = Integer.valueOf(values.get("anio")[0]);
+            Integer max = Integer.valueOf(values.get("max")[0]);   
 
             //hacemos la consulta
-            List<TRep4> registros = TRep4.find.where().eq("ano",anio).findList();
+            List<TRep4> registros = TRep4.find.where().eq("ano",anio).setMaxRows(max).findList();
             
             //presentamos la salida
-            return ok(s_rep4.render(registros,anio));
+            return ok(s_rep4.render(registros,anio,max));
         }catch(Exception e){
             return badRequest(error.render("Error en datos de entrada"));
         }
@@ -200,12 +201,15 @@ public class TacticoController extends Controller {
         
         //obtenemos los parametros segun name de cada input
         Integer anio = Integer.valueOf(values.get("anio")[0]);
+        Integer max = Integer.valueOf(values.get("max")[0]);   
+
+        
 
         //hacemos la consulta
-        List<TRep4> registros = TRep4.find.where().eq("ano",anio).findList();
+        List<TRep4> registros = TRep4.find.where().eq("ano",anio).setMaxRows(max).findList();
         
         //presentamos la salida
-        return pdfGenerator.ok(pdf_rep4.render(registros,anio),Configuration.root().getString("application.host"));
+        return pdfGenerator.ok(pdf_rep4.render(registros,anio,max),Configuration.root().getString("application.host"));
     }
 
     public Result e_rep5(){
