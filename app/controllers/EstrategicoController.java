@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import org.joda.time.DateTimeComparator;
 import java.lang.Thread;
 import java.lang.Runnable;
+import com.avaje.ebean.Query;
+import com.avaje.ebean.SqlRow;
+import com.avaje.ebean.Ebean;
 
 import views.html.estrategico.*;
 import models.*;
@@ -98,6 +101,7 @@ public class EstrategicoController extends Controller {
 
 
         try{
+            
             //parametros de formulario
             Map<String, String[]> values = request().body().asFormUrlEncoded();
             
@@ -155,10 +159,16 @@ public class EstrategicoController extends Controller {
         
             SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
             desde = sdf.parse(values.get("desde")[0]);
-            hasta = sdf.parse(values.get("hasta")[0]);      
+            hasta = sdf.parse(values.get("hasta")[0]);   
+
+
+            String sql="select carrera, sum(retirados) as retirados from retirados where carrera=:carrera  group by carrera";
+            List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("carrera", carrera).findList();
+
+
             registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).findList();
                         
-            return ok(s_rep3.render(registros,carrera,desde,hasta));
+            return ok(s_rep3.render(sqlRows,carrera,desde,hasta));
             /* if(periodo == null){
                 flash("error","La fecha que ha ingresado no coincide con la fecha de inicio de ningun periodo de planilla, por favor intente nuevamente utilizando el selector de fechas");
                 return badRequest(errores.render());
@@ -184,10 +194,13 @@ public class EstrategicoController extends Controller {
         
             SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
             desde = sdf.parse(values.get("desde")[0]);
-            hasta = sdf.parse(values.get("hasta")[0]);      
+            hasta = sdf.parse(values.get("hasta")[0]);
+            String sql="select carrera, sum(retirados) as retirados from retirados where carrera=:carrera  group by carrera";
+            List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("carrera", carrera).findList();
+      
             registros = ERep3.find.where().eq("carrera",carrera).ge("fecha",desde).le("fecha",hasta).findList();
                         
-            return pdfGenerator.ok(pdf_rep3.render(registros,carrera,desde,hasta),Configuration.root().getString("application.host"));
+            return pdfGenerator.ok(pdf_rep3.render(sqlRows,carrera,desde,hasta),Configuration.root().getString("application.host"));
             
             /* if(periodo == null){
                 flash("error","La fecha que ha ingresado no coincide con la fecha de inicio de ningun periodo de planilla, por favor intente nuevamente utilizando el selector de fechas");

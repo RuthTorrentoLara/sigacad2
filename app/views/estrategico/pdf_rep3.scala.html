@@ -1,4 +1,6 @@
-@(registros: List[ERep3],carrera:String,desde:Date,hasta:Date)
+@import com.avaje.ebean.SqlRow;
+
+@(registros: List[SqlRow],carrera:String,desde:Date,hasta:Date)
 @import helper._
 <html>
 
@@ -34,11 +36,11 @@
                 <tbody>
 
                     @for((row, index) <- registros.reverse.zipWithIndex) {
-                        <tr>
-                            <td>@(index+1)</td>
-                            <td>@row.carrera</td>
-                            <td>@row.retirados</td>
-                        </tr>
+                    <tr>
+                        <td>@(index+1)</td>
+                        <td>@row.getString("carrera")</td>
+                        <td>@row.getInteger("retirados")</td>
+                    </tr>
                     }
                 </tbody>
             </table>
