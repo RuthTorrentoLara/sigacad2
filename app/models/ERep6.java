@@ -13,6 +13,9 @@ import com.avaje.ebean.*;
 public class ERep6 extends Model{
 	@Id
 	public Long id;
+	public String carrera;
+	public Integer ano;
+	public Integer ciclo; 
 	public String materia;
 	public Integer retiros;
 

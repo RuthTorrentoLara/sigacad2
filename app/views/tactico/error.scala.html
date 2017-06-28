@@ -1,0 +1,22 @@
+@(mensaje: String)
+
+
+@css={
+}
+
+@js={
+
+}
+
+@breadcrumb = {
+
+}
+
+@tactico.base("Error","Ooops! Ha ocurrido un error","0",css,js,breadcrumb){
+
+     <div class="alert alert-danger text-center">
+        <h3>@mensaje</h3>
+        <h4>Regresar a Inicio: <a href="@routes.TacticoController.home()">aqui</a></h4>
+    </div>
+
+}

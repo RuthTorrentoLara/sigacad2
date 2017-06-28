@@ -1,4 +1,5 @@
-@(registros: List[ERep3],carrera:String,desde:Date,hasta:Date,max:Integer)
+@(registros: List[TRep3],carrera:String)
+@import scala.math.BigDecimal
 @import helper._
 
 @css={
@@ -15,24 +16,21 @@
 
 @breadcrumb = {
 	<ul class="breadcrumb">
-		<li class=""><a href="/estrategico">Estratégico</a></li>
+		<li class=""><a href="/tactico">Tactico</a></li>
 		<li class="active"><a href="#">Reporte 3</a></li>
 	</ul>
 }
- 
 
-@estrategico.base("Reporte 3","Resumen de cantidad de estudiantes que se retiran de la FIA por carrera y rango de fecha ","3",css,js,breadcrumb){
+
+@tactico.base("Reporte 3","Semi-Resumen de Estudiantes que deben cursar PERA a la fecha actual","3",css,js,breadcrumb){
 
     <br>
     <br>
 
     <div class="text-center row">
         <div class="col-sm-4"></div>
-        <form method="post" action="@routes.EstrategicoController.pdf_rep3()">
+        <form method="post" action="@routes.TacticoController.pdf_rep3()">
             <input type="text" name="carrera" value="@carrera" hidden="true"/>
-            <input type="text" name="desde" value="@desde.format("dd/MM/yyyy")" hidden="true" />
-            <input type="text" id="txtDateHasta" name="hasta" value="@hasta.format("dd/MM/yyyy")" hidden="true"/>
-            <input type="text" id="max" name="max" value="@max" hidden="true"/>
             <button type="submit" class="btn btn-success col-sm-2">Ver en PDF</button>
         </form>
          <button type="button" class="btn btn-warning col-sm-2" onclick="$('#reporte-table').tableExport({type:'excel',escape:'false'});">Exportar Excel</button>
@@ -46,7 +44,7 @@
     </div>
     
     <div class="text-center row">
-        <p><strong>Desde:</strong> @desde.format("dd/MM/yyyy") &nbsp;&nbsp;&nbsp; <strong>Hasta:</strong> @hasta.format("dd/MM/yyyy")</p>
+        <p><strong>Carrera:</strong> @carrera</p>
     </div>
 
     <div class="text-center row">
@@ -56,8 +54,9 @@
             <thead>
             <tr>
                 <th>No</th>
-                <th>Carrera</th>
-                <th>Retirados</th>
+                <th>Alumno</th>
+                <th>Carnet</th>
+                <th>CUM</th>
             </tr>
             </thead>
             <tbody>
@@ -65,8 +64,10 @@
                 @for((row, index) <- registros.reverse.zipWithIndex) {
                     <tr>
                         <td>@(index+1)</td>
-                        <td>@row.carrera</td>
-                        <td>@row.retirados</td>
+                        <td>@row.alumno</td>
+                        <td>@row.carne</td>
+                        <!--se debe convertir a dobule los enteros para que exista precision-->
+                        <td>@row.cum</td>
                     </tr>
                 }
 
