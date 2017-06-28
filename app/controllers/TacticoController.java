@@ -142,13 +142,15 @@ public class TacticoController extends Controller {
             Map<String, String[]> values = request().body().asFormUrlEncoded();
             
             //obtenemos los parametros segun name de cada input
-            String carrera = values.get("carrera")[0];        
+            String carrera = values.get("carrera")[0];       
+            Integer max = Integer.valueOf(values.get("max")[0]);        
+             
 
             //hacemos la consulta
-            List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).findList();
+            List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).setMaxRows(max).findList();
             
             //presentamos la salida
-            return ok(s_rep3.render(registros,carrera));
+            return ok(s_rep3.render(registros,carrera,max));
         }catch(Exception e){
             return badRequest(error.render("Error en datos de entrada"));
         }
@@ -160,13 +162,14 @@ public class TacticoController extends Controller {
         Map<String, String[]> values = request().body().asFormUrlEncoded();
         
         //obtenemos los parametros segun name de cada input
-        String carrera = values.get("carrera")[0];        
+        String carrera = values.get("carrera")[0]; 
+        Integer max = Integer.valueOf(values.get("max")[0]);        
 
         //hacemos la consulta
-        List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).findList();
+        List<TRep3> registros = TRep3.find.where().eq("carrera",carrera).setMaxRows(max).findList();
         
         //presentamos la salida
-        return pdfGenerator.ok(pdf_rep3.render(registros,carrera),Configuration.root().getString("application.host"));
+        return pdfGenerator.ok(pdf_rep3.render(registros,carrera,max),Configuration.root().getString("application.host"));
     }
 
     public Result e_rep4(){

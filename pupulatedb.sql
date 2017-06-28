@@ -1,11 +1,11 @@
---insert into tipo_usuario (codigo,nombre,descripcion) values (1,'Administrador','crea usuarios');
---insert into tipo_usuario (codigo,nombre,descripcion) values (2,'Estrategico','consulta reportes estrategicos');
---insert into tipo_usuario (codigo,nombre,descripcion) values (3,'Tactico','consulta reportes tacticos');
+-- insert into tipo_usuario (codigo,nombre,descripcion) values (1,'Administrador','crea usuarios');
+-- insert into tipo_usuario (codigo,nombre,descripcion) values (2,'Estrategico','consulta reportes estrategicos');
+-- insert into tipo_usuario (codigo,nombre,descripcion) values (3,'Tactico','consulta reportes tacticos');
 
 
----insert into usuario (nombre,username,password,tipo_id) values ('Edwin Valle','admin','admin',1);
---insert into usuario (nombre,username,password,tipo_id) values ('Ruben Descamps','estrategico','estrategico',2);
---insert into usuario (nombre,username,password,tipo_id) values ('Roberto Lopez','tactico','tactico',3);
+-- insert into usuario (nombre,username,password,tipo_id) values ('Edwin Valle','admin','4dm1n123',1);
+-- insert into usuario (nombre,username,password,tipo_id) values ('Ruben Descamps','estrategico','3$tr4t3g1c0',2);
+-- insert into usuario (nombre,username,password,tipo_id) values ('Roberto Lopez','tactico','t4ct1c0',3);
 
 
 truncate reprobados;

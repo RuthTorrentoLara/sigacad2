@@ -1,4 +1,4 @@
-@(registros: List[TRep3],carrera:String)
+@(registros: List[TRep3],carrera:String,max:Integer)
 @import scala.math.BigDecimal
 @import helper._
 
@@ -31,6 +31,7 @@
         <div class="col-sm-4"></div>
         <form method="post" action="@routes.TacticoController.pdf_rep3()">
             <input type="text" name="carrera" value="@carrera" hidden="true"/>
+            <input type="text" id="max" name="max" value="@max" hidden="true" />
             <button type="submit" class="btn btn-success col-sm-2">Ver en PDF</button>
         </form>
          <button type="button" class="btn btn-warning col-sm-2" onclick="$('#reporte-table').tableExport({type:'excel',escape:'false'});">Exportar Excel</button>

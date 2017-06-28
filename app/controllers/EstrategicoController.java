@@ -230,7 +230,7 @@ public class EstrategicoController extends Controller {
             Integer hasta = Integer.valueOf(values.get("hasta")[0]);
 
             //hacemos la consulta
-            List<ERep4> registros = ERep4.find.where().eq("carrera",carrera).ge("promocion",desde).le("promocion",hasta).findList();
+            List<ERep4> registros = ERep4.find.where().eq("carrera",carrera).ge("promocion",desde).le("promocion",hasta).orderBy("promocion desc").findList();
             
             //presentamos la salida
             return ok(s_rep4.render(registros,carrera,desde,hasta));
