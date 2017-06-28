@@ -36,7 +36,7 @@ create table egresados (
   id                            bigserial not null,
   carrera                       varchar(255),
   promocion                     integer,
-  promedio                      integer,
+  promedio                      float,
   constraint pk_egresados primary key (id)
 );
 

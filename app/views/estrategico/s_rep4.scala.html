@@ -1,4 +1,5 @@
 @(registros: List[ERep4],carrera:String,desde:Integer,hasta:Integer)
+@import scala.math.BigDecimal
 @import helper._
 
 @css={
@@ -66,7 +67,7 @@
                     <tr>
                         <td>@(index+1)</td>
                         <td>@row.promocion</td>
-                        <td>@row.promedio</td>
+                        <td>@BigDecimal( row.promedio.toDouble ).setScale(2, BigDecimal.RoundingMode.HALF_UP)</td>
                     </tr>
                 }
 
